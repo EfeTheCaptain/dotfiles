@@ -12,7 +12,7 @@ alias chmodx='chmox +x'
 alias ai='sudo apt install -y'
 alias ar='sudo apt remove --purge'
 
-alias nn='sudo nano'
+alias nn='sudo nvim'
 
 alias sleep='sudo pm-suspend'
 alias powerof='sudo poweroff'
@@ -37,4 +37,14 @@ alias reboot='sudo reboot'
 ###git discard broken changes###
 #git checkout -- .
 ###
+
+
+## a way to add dotfiles to github ##
+# yadm init
+# yadm remote add origin git@github.com:yourusername/dotfiles.git (use the ssh key)
+# yadm add .bashrc .bash_aliases
+# yadm commit -m "initial commit message"
+# yadm branch -M main (rename the branch to main)
+# yadm push -u origin main
+##
 
