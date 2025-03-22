@@ -21,8 +21,8 @@ print_color_squares() {
     local output=""
 
     for color in "${colors[@]}"; do
-        output+="${color}${reset}" # No spaces between squares
+        output+="${color}${reset}" # Two spaces for square
     done
 
-    printf "$output\n"
+    printf "%s\n" "$output" # Add newline at the end
 }
