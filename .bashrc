@@ -48,11 +48,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# Source color squares function
+
+### Call the color file
 source ~/.config/bash/colored_prompt.sh
 
-# Call the color squares function to display the palette with names
-print_color_squares
+
 
 
 # Add sbin directories to PATH.  This is useful on systems that have sudo
