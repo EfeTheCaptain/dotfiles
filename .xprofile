@@ -1,0 +1,12 @@
+#!/bin/bash
+
+export XDG_RUNTIME_DIR=/run/user/$(id -u)
+[ -d "$XDG_RUNTIME_DIR" ] || sudo mkdir -p "$XDG_RUNTIME_DIR"
+sudo chown -R efe:efe /run/user/1000
+sudo chmod 700 "$XDG_RUNTIME_DIR"
+if [ "$(id -u)" -eq 1000 ] && [ ! -w /run/user/1000 ]; then
+        sudo chown efe:efe /run/user/1000
+        chmod 700 /run/user/1000
+fi
+
+
