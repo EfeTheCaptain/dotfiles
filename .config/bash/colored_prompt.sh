@@ -26,10 +26,11 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}'$sunlit_leaves'\u'@$evergreen_dark'\h'$nc':\[\e[1;37m\]\w'$nc'\$ '
+# Root/user prompt
+if [ "$UID" = 0 ]; then
+    PS1="\n\[\e[1;32m\]╭━━━[\[$bright_sky\]\u@\h\[\e[1;32m\]]━━━[\[$cloud_white\]\w\[\e[1;32m\]]\n\[\e[1;32m\]╰━━➜\[\e[0m\] "
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1="\n\[\e[1;32m\]╭━━━[\[$sunlit_leaves\]\u@\h\[\e[1;32m\]]━━━[\[$mid_sky\]\w\[\e[1;32m\]]\n\[\e[1;32m\]╰━━➜\[\e[0m\] "
 fi
 
 unset color_prompt force_color_prompt
@@ -42,13 +43,6 @@ case "$TERM" in
     *)
         ;;
 esac
-
-# Root/user prompt
-if [ "$UID" = 0 ]; then
-    PS1="$evergreen_dark\u$nc@$evergreen_dark\H$nc:$bright_sky\w$nc\\n$evergreen_dark#$nc "
-else
-    PS1="$sunlit_leaves\u$nc@$evergreen_dark\H$nc:$cloud_white\w$nc\\n$sunlit_leaves\$ $nc"
-fi
 
 # Force color interpretation
 PS1="$(eval echo -e \"$PS1\")"
