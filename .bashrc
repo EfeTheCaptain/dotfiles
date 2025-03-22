@@ -65,6 +65,4 @@ export PATH="$PATH:/home/efe/.local/bin"
 eval "$(zoxide init bash)"
 
 afetch
-print_color_squares
-
 
