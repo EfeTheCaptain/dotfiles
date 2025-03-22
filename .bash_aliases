@@ -94,4 +94,6 @@ alias gl='git log --oneline --graph --decorate'
 # from now on: yadm push
 ##
 
-
+#### APPS TO REMEMBER ###
+#fim is a terminal based image viewer
+# fim img.jpg

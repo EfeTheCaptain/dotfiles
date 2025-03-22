@@ -62,6 +62,7 @@ export XDG_RUNTIME_DIR=/run/user/$(id -u)
 
 # Created by `pipx` on 2025-03-17 21:39:20
 export PATH="$PATH:/home/efe/.local/bin"
+export TERMINAL=/usr/local/bin/st
 eval "$(zoxide init bash)"
 
 afetch

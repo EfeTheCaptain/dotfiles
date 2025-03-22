@@ -25,11 +25,5 @@ eval "$(ssh-agent -s)"
 . "$HOME/.cargo/env"
 
 
-#if [ "$(id -u)" -eq 1000 ] && [ ! -w /run/user/1000 ]; then
-#	sudo chown efe:efe /run/user/1000
-#	chmod 700 /run/user/1000
-#fi
-
-
 # Created by `pipx` on 2025-03-17 21:39:20
 export PATH="$PATH:/home/efe/.local/bin"
