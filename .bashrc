@@ -42,12 +42,23 @@ fi
 # -R: show ANSI colors correctly; -i: case insensitive search
 LESS="-R -i"
 
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
+#in /etc/bash.bashrc and /etc/profile sources /etc/bash.bashrc
+
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+
+# Source color definitions
+source ~/.config/bash/colors.sh
+
+# Source prompt setup
+source ~/.config/bash/prompt.sh
+
+# Source color squares function
+source ~/.config/bash/color_squares.sh
+
+# Call the color squares function to display the palette with names
+print_color_squares
 
 
 # Add sbin directories to PATH.  This is useful on systems that have sudo
