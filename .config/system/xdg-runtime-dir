@@ -1,5 +1,0 @@
-#runit service at /etc/runit/runsvdir/default/create-run-user/run
-#!/bin/sh
-mkdir -p /run/user/1000
-chmod 0700 -p /run/user/1000
-chown 1000:1000 -p /run/user/1000
