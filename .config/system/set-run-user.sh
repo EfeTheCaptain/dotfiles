@@ -1,5 +1,5 @@
 #!/bin/sh
-
+#essential for $XDG_RUNTIME_DIR on runit.
 USER_ID=1000
 GROUP_ID=1000
 RUNTIME_DIR="/run/user/$USER_ID"
