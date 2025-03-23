@@ -47,7 +47,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 ### Call the color file
-source ~/.config/bash/colored_prompt.
+source ~/.config/bash/colored_prompt.sh
 
 #
 afetch
