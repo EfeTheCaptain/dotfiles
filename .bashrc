@@ -1,6 +1,11 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Source .env for environment variables
+if [ -f ~/.env ]; then
+  . ~/.env
+fi
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # don't overwrite GNU Midnight Commander's setting of `ignorespace'.
 HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
@@ -33,9 +38,9 @@ if [ -f ~/.bash_aliases ]; then
 fi
 ###
 if [ -f /etc/bash_completion ]; then
-  . /etc/bash_completion
+    . /etc/bash_completion
 elif [ -f /usr/share/bash-completion/bash_completion ]; then
-  . /usr/share/bash-completion/bash_completion
+    . /usr/share/bash-completion/bash_completion
 fi
 ###
 # Default parameter to send to the "less" command
@@ -48,22 +53,18 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-
 ### Call the color file
 source ~/.config/bash/colored_prompt.sh
 
-
-
-
-# Add sbin directories to PATH.  This is useful on systems that have sudo
-echo $PATH | grep -Eq "(^|:)/sbin(:|)"     || PATH=$PATH:/sbin
-echo $PATH | grep -Eq "(^|:)/usr/sbin(:|)" || PATH=$PATH:/usr/sbin
-export XDG_RUNTIME_DIR=/run/user/$(id -u)
+# Remove redundant PATH additions, as they are now in .env
+# echo $PATH | grep -Eq "(^|:)/sbin(:|)"     || PATH=$PATH:/sbin
+# echo $PATH | grep -Eq "(^|:)/usr/sbin(:|)" || PATH=$PATH:/usr/sbin
+# export XDG_RUNTIME_DIR=/run/user/$(id -u) # Now in .env
 
 # Created by `pipx` on 2025-03-17 21:39:20
-export PATH="$PATH:/home/efe/.local/bin"
-export TERMINAL=/usr/local/bin/st
+# export PATH="$PATH:/home/efe/.local/bin" # Now in .env
+# export TERMINAL=/usr/local/bin/st # Now in .env
 eval "$(zoxide init bash)"
-
+eval "$(ssh-agent -s)" #added ssh agent
+. "$HOME/.cargo/env" #added cargo env
 afetch
-
