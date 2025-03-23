@@ -1,14 +1,19 @@
 #!/bin/sh
 
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-	eval $(dbus-launch --sh-syntax) || echo "DBUS FAILED !!!"
-fi
+# Determine the runtime directory
+RUNTIME_DIR="/run/user/$(id -u)"
 
+# Check if XDG_RUNTIME_DIR is not set
 if [ -z "$XDG_RUNTIME_DIR" ]; then
-	export XDG_RUNTIME_DIR=run/user/$(id -u)
-	sudo mkdir -p "$XDG_RUNTIME_DIR" 
-	sudo chmod 0700 "$XDG_RUNTIME_DIR" 
-	sudo chown $(id -u):$(id -g) "XDG_RUNTIME_DIR"
+    # Set XDG_RUNTIME_DIR
+    export XDG_RUNTIME_DIR="$RUNTIME_DIR"
+
+    # Ensure the runtime directory exists with correct permissions
+    if [ ! -d "$RUNTIME_DIR" ]; then
+        mkdir -p "$RUNTIME_DIR"
+        chmod 700 "$RUNTIME_DIR"
+        chown $(id -u):$(id -g) "$RUNTIME_DIR"
+    fi
 fi
 
 
