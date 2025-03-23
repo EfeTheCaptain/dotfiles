@@ -40,7 +40,4 @@ else
     fi
 fi
 
-# Keep the service running (required for runit)
-while true; do
-    sleep 3600
-done
+# Service exits after completing its task
