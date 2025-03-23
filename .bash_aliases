@@ -69,6 +69,8 @@ alias gl='git log --oneline --graph --decorate'
 #git checkout -- .
 ###
 
+alias yadm-force-push='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD) && yadm push --force'
+alias yadm-force-pull='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD)'
 
 ## a way to add dotfiles to github ##
 # yadm init
