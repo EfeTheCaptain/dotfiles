@@ -1,19 +1,8 @@
 #!/bin/sh
 
 # Configuration Variables
-KEYBOARD_LAYOUT="trq"
 WLAN_INTERFACE="wlan0"
 WPA_CONFIG="/etc/wpa_supplicant/wpa_supplicant.conf"
-
-# Load keyboard layout
-if command -v /usr/bin/loadkeys &> /dev/null; then
-  /usr/bin/loadkeys "$KEYBOARD_LAYOUT"
-  if [ $? -ne 0 ]; then
-    echo "Error: Failed to load keyboard layout '$KEYBOARD_LAYOUT'."
-  fi
-else
-  echo "Warning: loadkeys command not found. Keyboard layout not loaded."
-fi
 
 # Check if network is already configured
 if ip a show "$WLAN_INTERFACE" | grep -q "inet "; then
