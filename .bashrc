@@ -1,13 +1,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# Source .env for environment variables
-if [ -f ~/.env ]; then
-  . ~/.env
-fi
-
-# don't put duplicate lines in the history. See bash(1) for more options
-# don't overwrite GNU Midnight Commander's setting of `ignorespace'.
 HISTCONTROL=$HISTCONTROL${HISTCONTROL+:}ignoredups
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoreboth
@@ -54,17 +47,18 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 ### Call the color file
-source ~/.config/bash/colored_prompt.sh
+source ~/.config/bash/colored_prompt.
 
-# Remove redundant PATH additions, as they are now in .env
-# echo $PATH | grep -Eq "(^|:)/sbin(:|)"     || PATH=$PATH:/sbin
-# echo $PATH | grep -Eq "(^|:)/usr/sbin(:|)" || PATH=$PATH:/usr/sbin
-# export XDG_RUNTIME_DIR=/run/user/$(id -u) # Now in .env
+#
+afetch
+#
 
-# Created by `pipx` on 2025-03-17 21:39:20
-# export PATH="$PATH:/home/efe/.local/bin" # Now in .env
-# export TERMINAL=/usr/local/bin/st # Now in .env
+# Source .env for environment variables
+if [ -f ~/.env ]; then
+  . ~/.env
+fi
+
 eval "$(zoxide init bash)"
 eval "$(ssh-agent -s)" #added ssh agent
 . "$HOME/.cargo/env" #added cargo env
-afetch
+
