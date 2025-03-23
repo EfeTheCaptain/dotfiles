@@ -1,4 +1,25 @@
 # .bash_profile
+
+# Source .bashrc
+if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+fi
+
+# Load Turkish Q keyboard layout
+sudo /usr/bin/loadkeys trq
+
+# Set initial backlight brightness
+brightnessctl -d intel_backlight s 10%
+
+# Execute network-startup.sh
+if [ -x "$HOME/.config/system/network-startup.sh" ]; then
+    "$HOME/.config/system/network-startup.sh"
+fi
+
+# Source ~/.profile (if it exists)
+if [ -f "$HOME/.profile" ]; then
+    . "$HOME/.profile"
+fi# .bash_profile
 export PATH=$PATH:/usr/sbin:/usr/bin
 export QT_QPA_PLATFORMTHEME=gtk2
 export HISTSIZE=100
