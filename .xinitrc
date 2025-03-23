@@ -4,6 +4,6 @@
 if [ -f ~/.env ]; then
   . ~/.env
 fi
-
+sxhkd &
 # Execute dwm
 exec dwm
