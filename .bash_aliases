@@ -4,7 +4,7 @@ elif command -v batcat > /dev/null; then
 	alias cat="batcat"
 fi
 alias mk='sudo make clean install'
-alias mountt='sudo /home/efe/.local/bin/automount.sh'
+alias mountt='sudo /home/efe/.local/bin/mountfzf.sh'
 
 alias lsa='exa -a --color=auto --icons'
 alias ll='exa -T -a --level=1 --color=auto --icons'
@@ -12,9 +12,9 @@ alias lla='exa -T -a --level=2 --color=auto --icons'
 
 alias chmodx='chmox +x'
 
-alias au='sudo nala update'
-alias ai='sudo nala install'
-alias ar='sudo nala remove --purge'
+alias au='sudo apt update'
+alias ai='sudo apt install'
+alias ar='sudo apt remove --purge'
 
 alias v='sudo nvim'
 

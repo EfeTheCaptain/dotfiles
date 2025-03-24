@@ -45,6 +45,9 @@ LESS="-R -i"
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+##
+#remove the urgent part from the pywal cache
+#sed -i '17s/^/\/\//' /home/efe/.cache/wal/colors-wal-dwm.h
 
 ### Call the color file
 source ~/.config/bash/colored_prompt.sh
