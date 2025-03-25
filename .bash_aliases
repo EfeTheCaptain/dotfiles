@@ -107,3 +107,4 @@ alias yc='yadm commit -m'
 # acpi (battery-power)
 # fim img.jpg (terminal based image viewer)
 # xcompmgr (compositor, necessary for alpha patches)
+# scrot (screen capture)
