@@ -1,8 +1,9 @@
 ctrl + shift + F12
-	amixer set Master 5%+
+	amixer set Master 5%+ && pkill -RTMIN+10 
 
 ctrl + shift + F11
-	amixer set Master 5%-
+	amixer set Master 5%- && pkill -RTMIN+10
+
 
 
 ctrl + shift + F5
@@ -10,3 +11,7 @@ ctrl + shift + F5
 
 ctrl + shift + F4
 	brightnessctl -d intel_backlight s 5%-
+
+
+ctrl + shift + F3
+ 	~/.local/bin/wal_rotate.sh 
