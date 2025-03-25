@@ -35,9 +35,10 @@ fi
 LESS="-R -i"
 
 #in /etc/bash.bashrc and /etc/profile sources /etc/bash.bashrc
-
 #remove the urgent part from the pywal cache
 #sed -i '17s/^/\/\//' /home/efe/.cache/wal/colors-wal-dwm.h
+
+test -r ~/.config/bash/.dir_colors && eval $(dircolors ~/.config/bash/.dir_colors)
 
 # Source .env for environment variables
 if [ -f ~/.env ]; then
