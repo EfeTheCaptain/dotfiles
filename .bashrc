@@ -49,4 +49,4 @@ fi
 afetch
 eval "$(zoxide init bash)"
 
-hstr --show-configuration >> ~/.bashrc
+#hstr --show-configuration >> ~/.bashrc
