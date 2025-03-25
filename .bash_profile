@@ -21,6 +21,11 @@ if [ -x "$HOME/.config/system/eth-blue-disable.sh" ]; then
     "$HOME/.config/system/eth-blue-disable.sh"
 fi
 
+# Execute set-run-user.sh
+if [ -x "$HOME/.config/system/set-run-user.sh" ]; then
+  "$HOME/.config/system/set-run-user.sh"
+fi
+
 # Source ~/.profile (if it exists)
 if [ -f "$HOME/.profile" ]; then
     . "$HOME/.profile"
