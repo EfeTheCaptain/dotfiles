@@ -1,5 +1,8 @@
 [ -z "$PS1" ] && return
 
+# Call the color prompt file
+source ~/.config/bash/colored_prompt.sh
+
 HISTCONTROL=ignoreboth
 shopt -s histappend
 shopt -s checkwinsize
@@ -35,9 +38,6 @@ LESS="-R -i"
 
 #remove the urgent part from the pywal cache
 #sed -i '17s/^/\/\//' /home/efe/.cache/wal/colors-wal-dwm.h
-
-# Call the color prompt file
-source ~/.config/bash/colored_prompt.sh
 
 # Source .env for environment variables
 if [ -f ~/.env ]; then
