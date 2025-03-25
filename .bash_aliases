@@ -3,6 +3,10 @@ if command -v bat > /dev/null; then
 elif command -v batcat > /dev/null; then
 	alias cat="batcat"
 fi
+
+alias cp='cp -vi'
+alias mv='mv -vi'
+
 alias mk='sudo make clean install'
 alias mountt='sudo /home/efe/.local/bin/mountfzf.sh'
 
@@ -97,5 +101,7 @@ alias yadm-force-pull='yadm fetch origin && yadm reset --hard origin/$(yadm symb
 ##
 
 #### APPS TO REMEMBER ###
-#fim is a terminal based image viewer
-# fim img.jpg
+# add-apt-repository
+# acpi (battery-power)
+# fim img.jpg (terminal based image viewer)
+# xcompmgr (compositor, necessary for alpha patches)
