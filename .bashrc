@@ -1,12 +1,12 @@
 [ -z "$PS1" ] && return
 
 HISTCONTROL=ignoreboth
-
 shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-
 shopt -s checkwinsize
+
+# Key bindings
+bind 'set show-all-if-ambiguous on'
+bind 'TAB:menu-complete'
 
 # make less more friendly for non-text input files, see lesspipe(1)
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -48,3 +48,5 @@ fi
 afetch
 eval "</span>(zoxide init bash)"
 eval "$(ssh-agent -s)" #added ssh agent
+
+hstr --show-bash-configuration >> ~/.bashrc
