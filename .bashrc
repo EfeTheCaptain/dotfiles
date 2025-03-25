@@ -47,7 +47,7 @@ fi
 
 . "$HOME/.cargo/env" 
 afetch
-eval "</span>(zoxide init bash)"
+eval "$(zoxide init bash)"
 eval "$(ssh-agent -s)" #added ssh agent
 
 hstr --show-configuration >> ~/.bashrc
