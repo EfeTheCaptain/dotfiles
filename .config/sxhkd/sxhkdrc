@@ -14,4 +14,4 @@ ctrl + shift + F4
 
 
 ctrl + shift + F3
- 	~/.local/bin/wal_rotate.sh 
+ 	feh --bg-fill --random /home/efe/img/AI_Images/	

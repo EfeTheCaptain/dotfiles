@@ -4,6 +4,7 @@ USER_ID=1000
 GROUP_ID=1000
 RUNTIME_DIR="/run/user/$USER_ID"
 
+sleep 3
 # Check if the runtime directory exists
 if [ -d "$RUNTIME_DIR" ]; then
     # Check if it's owned by root
