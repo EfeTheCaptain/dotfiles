@@ -31,7 +31,7 @@ alias reboot='sudo reboot'
 alias chmodx='sudo chmod +x'
 
 alias wgeti='wget -N --header="Cache-Control: no-cache" --header="Pragma: no-cache" '
-alias brii='brightnessctl -d intel_backlight s'
+#alias brii='brightnessctl -d intel_backlight s'
 
 alias aliass='sudo nvim ~/.bash_aliases'
 alias bashrcc='sudo nvim ~/.bashrc'
