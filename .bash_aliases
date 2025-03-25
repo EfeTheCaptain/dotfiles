@@ -7,6 +7,8 @@ fi
 alias cp='cp -vi'
 alias mv='mv -vi'
 
+alias cpv='rsync -avh --info=progress2'
+
 alias mk='sudo make clean install'
 alias mountt='sudo /home/efe/.local/bin/mountfzf.sh'
 
@@ -75,7 +77,7 @@ alias gl='git log --oneline --graph --decorate'
 
 alias yadm-force-push='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD) && yadm push --force'
 alias yadm-force-pull='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD)'
-
+alias ya='yadm add .bashrc .bash_profile .bash_aliases .env .profile .xinitrc .xprofile .Xresources ~/.config/bash* ~/.config/sxhkd/* ~/.config/system/*'
 ## a way to add dotfiles to github ##
 # yadm init
 # yadm remote add origin git@github.com:yourusername/dotfiles.git (use the ssh key)
