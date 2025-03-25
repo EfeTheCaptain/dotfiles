@@ -28,9 +28,9 @@ fi
 
 # Root/user prompt (use fallback colors)
 if [ "$UID" = 0 ]; then
-    PS1="\n\[\e[1;32m\]╭━━━[\[$bright_sky\]\u@\h\[\e[1;32m\]]━━━[\[$cloud_white\]\w\[\e[1;32m\]]\n\[\e[1;32m\]╰━━▶  :\[\e[0m\] "
+    PS1="\n\[\e[1;32m\]╭━━━[\[$sun_yellow\]\u\[$bright_sky\]@\h\[\e[1;32m\]]━━━[\[$cloud_white\]\w\[\e[1;32m\]]\n\[\e[1;32m\]╰━━▶  :\[\e[0m\] "
 else
-    PS1="\n\[\e[1;32m\]╭━━━[\[$sunlit_leaves\]\u@\h\[\e[1;32m\]]━━━[\[$mid_sky\]\w\[\e[1;32m\]]\n\[\e[1;32m\]╰━━▶  \[\e[0m\] "
+    PS1="\n\[\e[1;32m\]╭━━━[\[$sun_yellow\]\u\[$sunlit_leaves\]@\h\[\e[1;32m\]]━━━[\[$mid_sky\]\w\[\e[1;32m\]]\n\[\e[1;32m\]╰━━▶  \[\e[0m\] "
 fi
 
 unset color_prompt force_color_prompt
