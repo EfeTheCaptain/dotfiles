@@ -45,9 +45,9 @@ if [ -f ~/.env ]; then
     . ~/.env
 fi
 
-. "<span class="math-inline">HOME/\.cargo/env" \#added cargo env
+. "$HOME/.cargo/env" 
 afetch
 eval "</span>(zoxide init bash)"
 eval "$(ssh-agent -s)" #added ssh agent
 
-hstr --show-bash-configuration >> ~/.bashrc
+hstr --show-configuration >> ~/.bashrc
