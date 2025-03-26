@@ -4,6 +4,10 @@
 if [ -f ~/.env ]; then
   . ~/.env
 fi
+# Execute set-run-user.sh
+if [ -x "$HOME/.config/system/set-run-user.sh" ]; then
+  "$HOME/.config/system/set-run-user.sh"
+fi
 
 xrdb -merge ~/.Xresources
 
