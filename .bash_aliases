@@ -6,7 +6,7 @@ fi
 
 alias cp='cp -vi'
 alias mv='mv -vi'
-
+alias count="ls * | wc -l"
 alias cpv='rsync -avh --info=progress2'
 
 alias mk='sudo make clean install'
