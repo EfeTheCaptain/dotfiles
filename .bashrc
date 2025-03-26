@@ -45,7 +45,7 @@ LESS="-R -i"
 #in /etc/bash.bashrc and /etc/profile sources /etc/bash.bashrc
 
 test -r ~/.config/bash/.dir_colors && eval "$(dircolors ~/.config/bash/.dir_colors)"
-. "$HOME/.cargo/env" 
+#. "$HOME/.cargo/env" 
 afetch
 eval "$(zoxide init bash)"
 
