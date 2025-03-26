@@ -1,5 +1,6 @@
 #!/bin/sh
-
+#WPA_SUPPLICANT 
+#Bring the device up, start, get ip, ready.
 # Configuration Variables
 WLAN_INTERFACE="wlan0"
 WPA_CONFIG="/etc/wpa_supplicant/wpa_supplicant.conf"
