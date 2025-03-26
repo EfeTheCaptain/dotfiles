@@ -49,8 +49,8 @@ alias mygitraw='echo "https://raw.githubusercontent.com/EfeTheCaptain/"'
 #git status
 alias gs='git status'
 #git add .
-git add -A
 #git add (filename)
+#git add -A
 alias ga='git add'
 #git commit -m "commit message"
 alias gc='git commit -m'
