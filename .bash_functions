@@ -25,49 +25,68 @@ s() { # do sudo, or sudo the last command if no argument given
 
 # Easy extract
 function extract {
- if [ $# -eq 0 ]; then
-    # display usage if no parameters given
-    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz|.zlib|.cso|.zst>"
-    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
- fi
-    for n in "$@"; do
-        if [ ! -f "$n" ]; then
-            echo "'$n' - file doesn't exist"
-            return 1
-        fi
+  if [ $# -eq 0 ]; then
+    echo "Usage: extract <file1.ext> [file2.ext] ..."
+    return 1
+  fi
 
-        case "${n%,}" in
-          *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
-                       tar zxvf "$n"       ;;
-          *.lzma)      unlzma ./"$n"      ;;
-          *.bz2)       bunzip2 ./"$n"     ;;
-          *.cbr|*.rar) unrar x -ad ./"$n" ;;
-          *.gz)        gunzip ./"$n"      ;;
-          *.cbz|*.epub|*.zip) unzip ./"$n"   ;;
-          *.z)         uncompress ./"$n"  ;;
-          *.7z|*.apk|*.arj|*.cab|*.cb7|*.chm|*.deb|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar|*.vhd)
-                       7z x ./"$n"        ;;
-          *.xz)        unxz ./"$n"        ;;
-          *.exe)       cabextract ./"$n"  ;;
-          *.cpio)      cpio -id < ./"$n"  ;;
-          *.cba|*.ace) unace x ./"$n"     ;;
-          *.zpaq)      zpaq x ./"$n"      ;;
-          *.arc)       arc e ./"$n"       ;;
-          *.cso)       ciso 0 ./"$n" ./"$n.iso" && \
-                            extract "$n.iso" && \rm -f "$n" ;;
-          *.zlib)      zlib-flate -uncompress < ./"$n" > ./"$n.tmp" && \
-                            mv ./"$n.tmp" ./"${n%.*zlib}" && rm -f "$n"   ;;
-          *.dmg)
-                      hdiutil mount ./"$n" -mountpoint "./$n.mounted" ;;
-          *.tar.zst)  tar -I zstd -xvf ./"$n"  ;;
-          *.zst)      zstd -d ./"$n"  ;;
-          *)
-                      echo "extract: '$n' - unknown archive method"
-                      return 1
-                      ;;
-        esac
-    done
+  for n in "$@"; do
+    if [ ! -f "$n" ]; then
+      echo "Error: '$n' - file does not exist"
+      continue
+    fi
+
+    # Create an extraction directory
+    outdir="${n%.*}"
+    mkdir -p "$outdir"
+
+    case "${n}" in
+      *.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar) tar --auto-compress -xvf "$n" -C "$outdir" ;;
+      *.lzma) unlzma "$n" -C "$outdir" ;;
+      *.bz2) bunzip2 "$n" -c > "$outdir/${n%.bz2}" ;;
+      *.cbr|*.rar) unrar x "$n" "$outdir" ;;
+      *.gz) gunzip -c "$n" > "$outdir/${n%.gz}" ;;
+      *.cbz|*.epub|*.zip) unzip -d "$outdir" "$n" ;;
+      *.z) uncompress -c "$n" > "$outdir/${n%.z}" ;;
+      *.7z|*.apk|*.arj|*.cab|*.cb7|*.chm|*.deb|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar|*.vhd) 7z x "$n" -o"$outdir" ;;
+      *.xz) unxz "$n" -C "$outdir" ;;
+      *.exe) cabextract "$n" -d "$outdir" ;;
+      *.cpio) cpio -id < "$n" -D "$outdir" ;;
+      *.cba|*.ace) unace x "$n" -o"$outdir" ;;
+      *.zpaq) zpaq x "$n" -to "$outdir" ;;
+      *.arc) arc e "$n" -o"$outdir" ;;
+      *.cso)
+        if ciso 0 "$n" "$n.iso"; then
+          extract "$n.iso" && rm -f "$n"
+        else
+          echo "Error: ciso failed for $n"
+        fi
+        ;;
+      *.zlib)
+        if zlib-flate -uncompress < "$n" > "$outdir/${n%.*zlib}"; then
+          rm -f "$n"
+        else
+          echo "Error: zlib-flate failed for $n"
+        fi
+        ;;
+      *.dmg)
+        if command -v hdiutil >/dev/null; then
+          hdiutil mount "$n" -mountpoint "$outdir"
+        else
+          echo "Error: hdiutil (macOS) not found"
+        fi
+        ;;
+      *.tar.zst) tar --use-compress-program=zstd -xvf "$n" -C "$outdir" ;;
+      *.zst) zstd -d "$n" -o "$outdir/${n%.zst}" ;;
+      *.lz4) lz4 -d "$n" "$outdir/${n%.lz4}" ;;
+      *.img.gz) gunzip -c "$n" > "$outdir/${n%.gz}" ;;
+      *)
+        echo "Error: '$n' - unknown archive format"
+        ;;
+    esac
+  done
 }
+
 
 #----------------------------#
 
