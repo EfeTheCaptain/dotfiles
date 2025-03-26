@@ -15,7 +15,7 @@ bind 'TAB:menu-complete'
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 #-----------------------------------------------#ENV#
 if [ -f ~/.env ]; then
-  . ~/.env
+  . ~/.env 2>/dev/null >/dev/null
 fi
 #-----------------------------------------------#FUNC#
 if [ -f ~/.bash_functions ]; then
