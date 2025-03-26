@@ -15,7 +15,7 @@ bind 'TAB:menu-complete'
 #[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 #-----------------------------------------------#ENV#
 if [ -f ~/.env ]; then
-  export $(grep -v '^#' ~/.env | xargs)
+  . ~/.env
 fi
 #-----------------------------------------------#FUNC#
 if [ -f ~/.bash_functions ]; then
