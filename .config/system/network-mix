@@ -1,5 +1,9 @@
 #!/bin/sh
 
+#Create symlinks:
+#ln -s /etc/runit-core/networking-setup.sh /etc/runit-core/S14networking
+#ln -s /etc/runit-core/networking-setup.sh /etc/runit-core/K14networking
+
 # Configuration Variables
 WLAN_INTERFACE="wlan0"
 WPA_CONFIG="/etc/wpa_supplicant/wpa_supplicant.conf"
