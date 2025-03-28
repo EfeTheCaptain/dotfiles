@@ -1,0 +1,51 @@
+#!/bin/sh
+
+# Configuration Variables
+WLAN_INTERFACE="wlan0"
+WPA_CONFIG="/etc/wpa_supplicant/wpa_supplicant.conf"
+
+# Determine mode based on script name:
+case "$(basename "$0")" in
+  S*)
+    echo "Startup mode detected: Setting up network..."
+    
+    # Check if network is already configured
+    if sudo /usr/sbin/ip a show "$WLAN_INTERFACE" | grep -q "inet "; then
+      echo "Network already configured. Exiting."
+      exit 0
+    fi
+
+    # Bring the interface up
+    sudo /usr/sbin/ip link set "$WLAN_INTERFACE" up
+
+    # Start wpa_supplicant in background
+    sudo /usr/sbin/wpa_supplicant -B -i "$WLAN_INTERFACE" -c "$WPA_CONFIG"
+
+    # Obtain IP address via DHCP
+    sudo /usr/sbin/dhclient "$WLAN_INTERFACE"
+    
+    echo "Network startup complete."
+    ;;
+    
+  K*)
+    echo "Kill mode detected: Tearing down network..."
+    
+    # Stop DHCP client (adjust if needed)
+    sudo pkill dhclient
+    
+    # Kill wpa_supplicant (you might wish to target by interface or config)
+    sudo pkill wpa_supplicant
+
+    # Bring the interface down
+    sudo /usr/sbin/ip link set "$WLAN_INTERFACE" down
+    
+    echo "Network shutdown complete."
+    ;;
+    
+  *)
+    echo "Unknown mode. Script name must start with S (startup) or K (kill)."
+    exit 1
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,17 @@
+ctrl + shift + F12
+	amixer set Master 5%+ && pkill -RTMIN+10 
+
+ctrl + shift + F11
+	amixer set Master 5%- && pkill -RTMIN+10
+
+
+
+ctrl + shift + F5
+	brightnessctl -d intel_backlight s +5%
+
+ctrl + shift + F4
+	brightnessctl -d intel_backlight s 5%-
+
+
+ctrl + shift + F3
+ 	feh --bg-fill --randomize /home/efe/img/AI_Images/	
