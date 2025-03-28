@@ -123,13 +123,14 @@ alias ypush='yadm push'
 alias ypull='yadm pull'
 
 #### APPS TO REMEMBER ###
-# add-apt-repository
+
 # acpi (battery-power)
 # fim img.jpg (terminal based image viewer)
 # xcompmgr (compositor, necessary for alpha patches)
 # scrot (screen capture)
 
 #### COMMANDS TO REMEMBER ###
+# add-apt-repository
 #disk usage of all the files in the given directory, sort reverse human read, top 3
 #sudo du -ah /home | sort -rh | head -n 3
 
