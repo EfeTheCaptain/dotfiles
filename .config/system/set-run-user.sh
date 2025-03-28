@@ -72,6 +72,8 @@ if [ -e "$DBUS_SOCKET" ]; then
     log_error "DBus socket already exists at $DBUS_SOCKET."
 else
     if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+        # Explicitly set the address to use the correct DBus socket
+        export DBUS_SESSION_BUS_ADDRESS=unix:path=$DBUS_SOCKET
         eval $(dbus-launch --sh-syntax)
         if [ $? -ne 0 ]; then
             log_error "Failed to launch dbus."
