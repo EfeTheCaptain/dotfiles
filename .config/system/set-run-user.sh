@@ -3,6 +3,7 @@
 USER_ID=$(id -u)
 GROUP_ID=$(id -g)
 RUNTIME_DIR="/run/user/$USER_ID"
+DBUS_SOCKET="$RUNTIME_DIR/bus"
 ERROR_LOG="$HOME/set_run_user_errors"
 
 # Sleep for a while to allow the system to initialize.
@@ -52,13 +53,17 @@ fi
 # Set the XDG_RUNTIME_DIR environment variable
 export XDG_RUNTIME_DIR="$RUNTIME_DIR"
 
-# Start dbus if not already running
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-    eval $(dbus-launch --sh-syntax)
-    if [ $? -ne 0 ]; then
-        log_error "Failed to launch dbus."
-        exit 1
+# Check if the DBus socket already exists (for debugging purposes)
+if [ -e "$DBUS_SOCKET" ]; then
+    log_error "DBus socket already exists at $DBUS_SOCKET."
+else
+    # Start dbus if not already running
+    if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+        eval $(dbus-launch --sh-syntax)
+        if [ $? -ne 0 ]; then
+            log_error "Failed to launch dbus."
+            exit 1
+        fi
+        log_error "DBus started successfully with address: $DBUS_SESSION_BUS_ADDRESS."
     fi
 fi
-
-# Additional setup steps can be placed here if needed
