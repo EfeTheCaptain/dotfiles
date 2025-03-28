@@ -74,33 +74,42 @@ alias gl='git log --oneline --graph --decorate'
 #git checkout -- .
 ###
 
-alias yadm-force-push='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD) && yadm push --force'
-alias yadm-force-pull='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD)'
+## a way to add dotfiles to github ##
+# 1️⃣ Initialize YADM (if not already)
+# yadm init --path $HOME
+
+# 2️⃣ Check current status and make sure you're on the correct branch
+# yadm status
+
+# 3️⃣ If you need to create the 'locali' branch or switch:
+# yadm checkout -b locali
+
+# 4️⃣ Add files (e.g., new file) to your yadm-managed dotfiles
+# yadm add <file_name>
+
+# 5️⃣ Commit your changes
+# yadm commit -m "Add new file or update"
+
+# 6️⃣ Set upstream for the 'locali' branch to track remote
+# yadm push --set-upstream origin locali
+
+# 7️⃣ Push changes to remote (GitHub)
+# yadm push
+
+# 8️⃣ If you need to remove 'main' branch locally and remote (optional):
+# yadm branch -dr origin/main  # Remove local tracking reference
+# yadm remote prune origin     # Clean up remote refs
+# yadm push origin --delete main  # Remove from GitHub (optional)
+
+# 9️⃣ Verify everything is in sync:
+# yadm branch -a               # Check local and remote branches
+# yadm status                  # Verify no further changes to push
+
+#alias yadm-force-push='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD) && yadm push --force'
+#alias yadm-force-pull='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD)'
 alias ya='yadm add .bashrc .bash_profile .bash_aliases .env .profile .xinitrc .xprofile .Xresources ~/.config/bash* ~/.config/sxhkd/* ~/.config/system/*'
 alias yc='yadm commit -m'
-## a way to add dotfiles to github ##
-# yadm init
-# yadm remote add origin git@github.com:yourusername/dotfiles.git (use the ssh key)
-# yadm add .bashrc .bash_aliases
-# yadm commit -m "initial commit message"
-# yadm branch -M main (rename the branch to main)
-# yadm push -u origin main
-#
-# for a second push:
-# yadm log
-# yadm status
-# yadm add .bashrc
-# yadm commit -m "message"
-# (must be run at least once after the first initialization): yadm push -u origin main
-# yadm branch -vv # to verify
-# from now on: yadm push
-##
-# yadm branch -vv # to verify
-# from now on: yadm push
-##
-# yadm branch -vv # to verify
-# from now on: yadm push
-##
+
 
 #### APPS TO REMEMBER ###
 # add-apt-repository
