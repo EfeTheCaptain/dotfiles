@@ -6,9 +6,15 @@ CACHE_FILE="$HOME/.cache/sys_info_cache"
 # Check if cache file exists
 if [ ! -f "$CACHE_FILE" ]; then
     # Fetch and cache the system information
+
+    # Read the first word from sys_vendor
     cache_reading_2=$(awk '{print $1}' /sys/class/dmi/id/sys_vendor)
+    
+    # Read the third word from board_name
     cache_reading_3=$(awk '{print $3}' /sys/class/dmi/id/board_name)
-    cache_reading_1=$(awk '/model name/ {print $3, $4, $5}' /proc/cpuinfo | awk '{print $1"-"$2"-"$3}' | sed 's/^/Intel-/;s/@.*//')
+    
+    # Read and format the CPU model (e.g., Intel(R) Atom(TM) CPU 550 @1.50GHz -> Intel-Atom-N550)
+    cache_reading_1=$(awk -F: '/model name/ {print $2}' /proc/cpuinfo | head -n 1 | awk '{print $1"-"$2"-"$3}' | sed 's/Intel/Intel-/; s/Atom/Atom-/; s/([^)]+)//g')
 
     # Save the data to the cache file
     echo "$cache_reading_2" > "$CACHE_FILE"
@@ -35,8 +41,8 @@ sun_yellow='\[\e[38;5;226m\]'    # Bright Yellow (Sun)
 forest_shadow='\[\e[38;5;16m\]' # Dark Grey (Shadows)
 nc='\[\e[0m\]'
 
-# Define the prompt using cached data
-PS1="\n\[\e[1;32m\]╭────[$cache_reading_2]───╮\n\[\e[1;32m\]├──[$cache_reading_1]──────╯\n\[\e[1;32m\]├[user@\h]─[\w]\n\[\e[1;32m\]╰──▶  \[\e[0m\] "
+# Define the prompt using cached data with color codes
+PS1="\n\[\e[1;${bark_brown}m\]╭ ──[\[$evergreen_dark\]$cache_reading_2-\[$evergreen_dark\]$cache_reading_3\]───╮\n\[\e[1;${bark_brown}m\]├──[\[$mossy_green\]$cache_reading_1\]──────╯\n\[\e[1;${bark_brown}m\]├[\[$sun_yellow\]\u\[$bright_sky\]@\[$forest_shadow\]\h\[$bright_sky\]]─[\w]\n\[\e[1;${bark_brown}m\]╰──▶  \[\e[0m\] "
 
 # Force color interpretation
 PS1="$(eval echo -e \"$PS1\")"
