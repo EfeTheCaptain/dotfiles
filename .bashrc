@@ -48,5 +48,9 @@ test -r ~/.config/bash/.dir_colors && eval "$(dircolors ~/.config/bash/.dir_colo
 #. "$HOME/.cargo/env" 
 afetch
 eval "$(zoxide init bash)"
+[ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash 
+[ -f /usr/share/doc/fzf/examples/completion.bash ] && source /usr/share/doc/fzf/examples/completion.bash
 
+export FZF_COMPLETION_TRIGGER='^R'
 #hstr --show-configuration >> ~/.bashrc
+
