@@ -28,24 +28,8 @@ else
     cache_reading_1="${cache_data[2]}"
 fi
 
-# Define colors
-bright_sky='\[\e[38;5;117m\]'  # Light Blue (Sunny Sky)
-mid_sky='\[\e[38;5;39m\]'     # Medium Blue (Day Sky)
-cloud_white='\[\e[38;5;231m\]' # White (Clouds)
-sunlit_leaves='\[\e[38;5;118m\]' # Light Green (Sunlit Leaves)
-evergreen_dark='\[\e[38;5;22m\]' # Dark Green (Evergreen Needles)
-mossy_green='\[\e[38;5;28m\]'      # Moss Green
-bark_brown='\[\e[38;5;94m\]'      # Bark Brown
-soil_brown='\[\e[38;5;52m\]'      # Soil Brown
-sun_yellow='\[\e[38;5;226m\]'    # Bright Yellow (Sun)
-forest_shadow='\[\e[38;5;16m\]' # Dark Grey (Shadows)
-nc='\[\e[0m\]'
-
-# Define the prompt using cached data with color codes
-PS1="\n\[\e[1;${bark_brown}m\]╭ ──[\[$evergreen_dark\]$cache_reading_2-\[$evergreen_dark\]$cache_reading_3\]───╮\n\
-\[\e[1;${bark_brown}m\]├──[\[$mossy_green\]$cache_reading_1\]──────╯\n\
-\[\e[1;${bark_brown}m\]├[\[$sun_yellow\]\u\[$bright_sky\]@\[$forest_shadow\]\h\[$bright_sky\]]─[\[$mid_sky\]\w]\n\
-\[\e[1;${bark_brown}m\]╰──▶  \[\e[0m\]"
-
-# Force color interpretation
-PS1="$(eval echo -e \"$PS1\")"
+# Define the prompt without colors
+PS1="\n╭ ──[$cache_reading_2-$cache_reading_3]───╮\n\
+├──[$cache_reading_1]──────╯\n\
+├[\u@\h]─[\w]\n\
+╰──▶  "
