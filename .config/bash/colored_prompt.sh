@@ -2,7 +2,7 @@
 
 # Color Variables
 line_color='\[\e[38;5;083m\]'  # Bright Greenish Cyan (for all lines and brackets)
-pkg_count='\[\e[38;5;005m\]'   # Dark Purple
+pkg_count='\[\e[38;5;005m\]'    # Dark Purple
 cpu_model_color='\[\e[38;5;087m\]' # Light Cyan
 os_logo_color='\[\e[38;5;231m\]' # White (Debian logo)
 user_color='\[\e[38;5;184m\]' # Yellow-Green
@@ -20,7 +20,7 @@ package_count="${pkg_count}$(dpkg -l | grep '^ii' | wc -l)${nc}"
 os_logo="${os_logo_color}󰣇${nc}"
 
 # Define the Prompt
-PS1="\n${line_color}╭─${line_color}[${package_count}]─[${os_logo}]${nc}\n\
-${line_color}├──${line_color}[${cpu_model}]${line_color}]\n\
-${line_color}├───${line_color}[${user_color}\u${nc}@${host_color}\h${nc}]───[${dir_color}\w${line_color}]\n\
+PS1="\n${line_color}╭─${line_color}[${package_count}]${line_color}─[${os_logo}]${nc}\n\
+${line_color}├──${line_color}[${cpu_model}]${nc}\n\
+${line_color}├───[${user_color}\u${nc}@${host_color}\h${nc}]───[${dir_color}\w]${line_color}\n\
 ${line_color}╰─▶${nc} "
