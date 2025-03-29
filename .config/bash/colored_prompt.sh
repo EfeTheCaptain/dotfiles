@@ -45,7 +45,7 @@ nc='\[\e[0m\]'
 PS1="\n\[\e[1;${bark_brown}m\]╭ ──[\[$evergreen_dark\]$cache_reading_2-\[$evergreen_dark\]$cache_reading_3\]───╮\n\
 \[\e[1;${bark_brown}m\]├──[\[$mossy_green\]$cache_reading_1\]──────╯\n\
 \[\e[1;${bark_brown}m\]├[\[$sun_yellow\]\u\[$bright_sky\]@\[$forest_shadow\]\h\[$bright_sky\]]─[\[$mid_sky\]\w]\n\
-\[\e[1;${bark_brown}m\]├──▶  \[\e[0m\]"
+\[\e[1;${bark_brown}m\]╰──▶  \[\e[0m\]"
 
 # Force color interpretation
 PS1="$(eval echo -e \"$PS1\")"
