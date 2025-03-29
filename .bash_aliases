@@ -139,3 +139,4 @@ alias ypull='yadm pull'
 
 #search a package recommendations
 #apt-cache show neovim | grep -i Recommends
+#netcat share -> nc -l -p 18869 > enc.txt #this recieves the files using that port.

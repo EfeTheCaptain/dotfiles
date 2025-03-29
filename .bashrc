@@ -46,7 +46,11 @@ LESS="-R -i"
 
 test -r ~/.config/bash/.dir_colors && eval "$(dircolors ~/.config/bash/.dir_colors)"
 #. "$HOME/.cargo/env" 
+
 afetch
+
+eval "$(thefuck --alias)"
+
 eval "$(zoxide init bash)"
 [ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash 
 [ -f /usr/share/doc/fzf/examples/completion.bash ] && source /usr/share/doc/fzf/examples/completion.bash
