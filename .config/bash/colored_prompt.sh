@@ -1,6 +1,28 @@
 #!/bin/bash
 
-# Fallback colors
+# Define cache file
+CACHE_FILE="$HOME/.cache/sys_info_cache"
+
+# Check if cache file exists
+if [ ! -f "$CACHE_FILE" ]; then
+    # Fetch and cache the system information
+    cache_reading_2=$(awk '{print $1}' /sys/class/dmi/id/sys_vendor)
+    cache_reading_3=$(awk '{print $3}' /sys/class/dmi/id/board_name)
+    cache_reading_1=$(awk '/model name/ {print $3, $4, $5}' /proc/cpuinfo | awk '{print $1"-"$2"-"$3}' | sed 's/^/Intel-/;s/@.*//')
+
+    # Save the data to the cache file
+    echo "$cache_reading_2" > "$CACHE_FILE"
+    echo "$cache_reading_3" >> "$CACHE_FILE"
+    echo "$cache_reading_1" >> "$CACHE_FILE"
+else
+    # Read from cache file
+    mapfile -t cache_data < "$CACHE_FILE"
+    cache_reading_2="${cache_data[0]}"
+    cache_reading_3="${cache_data[1]}"
+    cache_reading_1="${cache_data[2]}"
+fi
+
+# Define colors
 bright_sky='\[\e[38;5;117m\]'  # Light Blue (Sunny Sky)
 mid_sky='\[\e[38;5;39m\]'     # Medium Blue (Day Sky)
 cloud_white='\[\e[38;5;231m\]' # White (Clouds)
@@ -13,36 +35,8 @@ sun_yellow='\[\e[38;5;226m\]'    # Bright Yellow (Sun)
 forest_shadow='\[\e[38;5;16m\]' # Dark Grey (Shadows)
 nc='\[\e[0m\]'
 
-# Color detection logic (remains the same)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
+# Define the prompt using cached data
+PS1="\n\[\e[1;32m\]╭────[$cache_reading_2]───╮\n\[\e[1;32m\]├──[$cache_reading_1]──────╯\n\[\e[1;32m\]├[user@\h]─[\w]\n\[\e[1;32m\]╰──▶  \[\e[0m\] "
 
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-        color_prompt=yes
-    else
-        color_prompt=
-    fi
-fi
-
-# Root/user prompt (use fallback colors)
-if [ "$UID" = 0 ]; then
-    PS1="\n\[\e[1;32m\]╭━━━[\[$sun_yellow\]\u\[$bright_sky\]@\h\[\e[1;32m\]]━━━[\[$cloud_white\]\w\[\e[1;32m\]]\n\[\e[1;32m\]╰━━▶  :\[\e[0m\] "
-else
-    PS1="\n\[\e[1;32m\]╭━━━[\[$sun_yellow\]\u\[$sunlit_leaves\]@\h\[\e[1;32m\]]━━━[\[$mid_sky\]\w\[\e[1;32m\]]\n\[\e[1;32m\]╰━━▶  \[\e[0m\] "
-fi
-
-unset color_prompt force_color_prompt
-
-# Xterm title setting (remains the same)
-case "$TERM" in
-    xterm*|rxvt*)
-        PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-        ;;
-    *)
-        ;;
-esac
-
-# Force color interpretation (remains the same)
+# Force color interpretation
 PS1="$(eval echo -e \"$PS1\")"
