@@ -1,5 +1,3 @@
-#define _POSIX_C_SOURCE 200809L
-
 #include <pthread.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -175,9 +173,12 @@ int main()
     pthread_join(threads[4], NULL);
 
     // Print the output with colors, resetting the color after each field
-    printf("%s%s%s %s%s%s\n", UserText, TextColour, username, OsText, TextColour, osname);
-    printf("%s%s%s %s%s%s\n", KernelText, TextColour, krnlver, UptimeText, TextColour, uptimeH, uptimeM);
-    printf("%s%s%s %s%s%s\n", ShellText, TextColour, shellname, PackageText, TextColour, pkgCount);
+    printf("%s%s%s\n", UserText, TextColour, username);
+    printf("%s%s%s\n", OsText, TextColour, osname);
+    printf("%s%s%s\n", KernelText, TextColour, krnlver);
+    printf("%s%s%ldh %ldm\n", UptimeText, TextColour, uptimeH, uptimeM);
+    printf("%s%s%s\n", ShellText, TextColour, shellname);
+    printf("%s%s%s\n", PackageText, TextColour, pkgCount);
 
     pthread_create(&threads[5], NULL, colourDraw, NULL);
     pthread_join(threads[5], NULL);
