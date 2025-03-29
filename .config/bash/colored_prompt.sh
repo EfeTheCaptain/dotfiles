@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# Fetch and format the system information directly
-
-# Read and format the CPU model (e.g., Intel(R) Atom(TM) CPU 550 @1.50GHz -> Intel-Atom-N550)
-cpu_model=$(awk -F: '/model name/ {print $2}' /proc/cpuinfo | head -n 1 | sed 's/Intel/Intel-/; s/Atom/Atom-/; s/([^)]+)//g' | awk '{print $1"-"$2"-"$3}')
+# Fetch and format the CPU model correctly
+cpu_model=$(grep -m 1 'model name' /proc/cpuinfo | sed -E 's/.*Intel.*Atom.*CPU ([0-9]+).*@([0-9.]+)GHz.*/Intel-Atom-\1/')
 
 # Define the simplified prompt
 PS1="\n╭──[$cpu_model] \n\
