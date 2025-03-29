@@ -15,3 +15,22 @@ ctrl + shift + F4
 
 ctrl + shift + F3
  	feh --bg-fill --randomize /home/efe/img/AI_Images/	
+
+
+ctrl + alt + Right
+	cmus-remote -n
+
+ctrl + alt + Left
+	cmus-remote -p
+
+ctrl + alt + space
+	cmus-remote -u
+
+ctrl + alt + Up
+	cmus-remote -v +5
+
+ctrl + alt + Down
+	cmus-remote -v -5
+
+
+
