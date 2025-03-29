@@ -1,9 +1,10 @@
 #!/bin/sh
 #WPA_SUPPLICANT 
 #Bring the device up, start, get ip, ready.
-# Configuration Variables
-# Optionally place this in without sudo /etc/runit-core/S14networking-setup.sh !Currently could not get it to work!
 
+# Configuration Variables
+# Set runit to chmodx executable and chmod 755 to make it activate.
+# add this script in it.
 WLAN_INTERFACE="wlan0"
 WPA_CONFIG="/etc/wpa_supplicant/wpa_supplicant.conf"
 
@@ -21,5 +22,5 @@ sudo /usr/sbin/wpa_supplicant -B -i "$WLAN_INTERFACE" -c "$WPA_CONFIG"
 
 # Obtain IP address via DHCP
 sudo /usr/sbin/dhclient "$WLAN_INTERFACE"
-echo "--------------------?NETWORK?--------------------"
+echo "-----------------!--NETWORK--!-----------------"
 # Exit script

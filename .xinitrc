@@ -19,7 +19,7 @@ fi
 dbus-update-activation-environment DISPLAY
 
 # Other startup commands:
-sudo /usr/bin/loadkeys tr
+#sudo /usr/bin/loadkeys tr
 xrdb -merge ~/.Xresources
 dwmblocks &
 xcompmgr &
