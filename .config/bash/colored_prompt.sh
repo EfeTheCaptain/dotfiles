@@ -20,7 +20,7 @@ package_count="${pkg_count}$(dpkg -l | grep '^ii' | wc -l)${nc}"
 os_logo="${os_logo_color}󰣇${nc}"
 
 # Define the Prompt
-PS1="\n${line_color}╭─${line_color}[${package_count}]${nc}\n\
-${line_color}├──${line_color}[${cpu_model}]${nc}\n\
-${line_color}├───${line_color}[ ${os_logo} ]───${line_color}[${user_color}\u${nc}@${host_color}\h${nc}]───${line_color}[${dir_color}\w${nc}]\n\
+PS1="\n${line_color}╭─${line_color}[${package_count}]─[${os_logo}]${nc}\n\
+${line_color}├──${line_color}[${cpu_model}]${line_color}]\n\
+${line_color}├───${line_color}[${user_color}\u${nc}@${host_color}\h${nc}]───[${dir_color}\w${line_color}]\n\
 ${line_color}╰─▶${nc} "
