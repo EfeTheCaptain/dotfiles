@@ -1,0 +1,74 @@
+rm -rf afetch afetch.dSYM afetch-debug afetch-debug.dSYM
+cc -O2 -std=c99 -Wall -Wextra src/fetch.c -lpthread -o afetch
+src/fetch.c: In function ‘main’:
+src/fetch.c:14:39: error: ‘user’ undeclared (first use in this function)
+   14 |     pthread_create(&threads[0], NULL, user, NULL);
+      |                                       ^~~~
+src/fetch.c:14:39: note: each undeclared identifier is reported only once for each function it appears in
+src/fetch.c:15:39: error: ‘os’ undeclared (first use in this function)
+   15 |     pthread_create(&threads[1], NULL, os, NULL);
+      |                                       ^~
+src/fetch.c:16:39: error: ‘kernel’ undeclared (first use in this function)
+   16 |     pthread_create(&threads[2], NULL, kernel, NULL);
+      |                                       ^~~~~~
+src/fetch.c:17:39: error: ‘uptime’ undeclared (first use in this function); did you mean ‘ctime’?
+   17 |     pthread_create(&threads[3], NULL, uptime, NULL);
+      |                                       ^~~~~~
+      |                                       ctime
+src/fetch.c:18:39: error: ‘shell’ undeclared (first use in this function)
+   18 |     pthread_create(&threads[4], NULL, shell, NULL);
+      |                                       ^~~~~
+src/fetch.c:24:5: warning: implicit declaration of function ‘asprintf’; did you mean ‘vsprintf’? [-Wimplicit-function-declaration]
+   24 |     asprintf(&output,
+      |     ^~~~~~~~
+      |     vsprintf
+src/fetch.c:31:9: error: ‘UserText’ undeclared (first use in this function)
+   31 |         UserText, TextColour, username,
+      |         ^~~~~~~~
+src/fetch.c:31:19: error: ‘TextColour’ undeclared (first use in this function)
+   31 |         UserText, TextColour, username,
+      |                   ^~~~~~~~~~
+src/fetch.c:31:31: error: ‘username’ undeclared (first use in this function); did you mean ‘uname’?
+   31 |         UserText, TextColour, username,
+      |                               ^~~~~~~~
+      |                               uname
+src/fetch.c:32:9: error: ‘OsText’ undeclared (first use in this function)
+   32 |         OsText, TextColour, osname,
+      |         ^~~~~~
+src/fetch.c:32:29: error: ‘osname’ undeclared (first use in this function); did you mean ‘uname’?
+   32 |         OsText, TextColour, osname,
+      |                             ^~~~~~
+      |                             uname
+src/fetch.c:33:9: error: ‘KernelText’ undeclared (first use in this function)
+   33 |         KernelText, TextColour, krnlver,
+      |         ^~~~~~~~~~
+src/fetch.c:33:33: error: ‘krnlver’ undeclared (first use in this function)
+   33 |         KernelText, TextColour, krnlver,
+      |                                 ^~~~~~~
+src/fetch.c:34:9: error: ‘UptimeText’ undeclared (first use in this function)
+   34 |         UptimeText, TextColour, uptimeH, uptimeM,
+      |         ^~~~~~~~~~
+src/fetch.c:34:33: error: ‘uptimeH’ undeclared (first use in this function); did you mean ‘ctime’?
+   34 |         UptimeText, TextColour, uptimeH, uptimeM,
+      |                                 ^~~~~~~
+      |                                 ctime
+src/fetch.c:34:42: error: ‘uptimeM’ undeclared (first use in this function); did you mean ‘ctime’?
+   34 |         UptimeText, TextColour, uptimeH, uptimeM,
+      |                                          ^~~~~~~
+      |                                          ctime
+src/fetch.c:35:9: error: ‘ShellText’ undeclared (first use in this function)
+   35 |         ShellText, TextColour, shellname,
+      |         ^~~~~~~~~
+src/fetch.c:35:32: error: ‘shellname’ undeclared (first use in this function)
+   35 |         ShellText, TextColour, shellname,
+      |                                ^~~~~~~~~
+src/fetch.c:36:9: error: ‘PackageText’ undeclared (first use in this function)
+   36 |         PackageText, TextColour, pkgCount
+      |         ^~~~~~~~~~~
+src/fetch.c:36:34: error: ‘pkgCount’ undeclared (first use in this function)
+   36 |         PackageText, TextColour, pkgCount
+      |                                  ^~~~~~~~
+src/fetch.c:44:39: error: ‘colourDraw’ undeclared (first use in this function)
+   44 |     pthread_create(&threads[5], NULL, colourDraw, NULL);
+      |                                       ^~~~~~~~~~
+make: *** [Makefile:11: afetch] Error 1
