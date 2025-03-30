@@ -1,18 +1,22 @@
 #!/bin/bash
 
+# Define color variables
+COL_GREEN="\033[38;5;34m"
+COL_BLUE="\033[38;5;125m"
+COL_CYAN="\033[38;5;89m"
+COL_YELLOW="\033[38;5;220m"
+COL_RED="\033[38;5;45m"
+
 # Dynamic content generation (with PS1 escapes)
-package_count="\[\033[38;5;125m\]$(dpkg -l | grep -c '^ii')\[\033[0m\]"
-cpu_model="\[\033[38;5;89m\]Intel-Atom-N550\[\033[0m\]"
-os_logo="\[\033[38;5;231m\]\U238\[\033[0m\]"  # White Debian logo
+package_count="${COL_BLUE}$(dpkg -l | grep -c '^ii')"
+cpu_model="${COL_CYAN}Intel-Atom-N550"
+os_logo="${COL_YELLOW}\U238"  # Yellow Debian logo
 
 # Static header display (using printf for reliability)
-printf "\033[38;5;34m╭──[ %b ]───[ %b ]\033[0m\n" "$package_count" "$os_logo"
-printf "\033[38;5;34m╰───[ %b ]\033[0m\n" "$cpu_model"
+printf "${COL_GREEN}╭──[ %b ]───[ %b ]\n" "$package_count" "$os_logo"
+printf "${COL_GREEN}╰───[ %b ]" "$cpu_model"
 
 # Interactive prompt (with proper \[ \] escaping)
 PS1="\n\
 \[\033[38;5;34m\]╭───[\[\033[38;5;220m\]\u\[\033[38;5;26m\]@\h\[\033[38;5;34m\]]──[\[\033[38;5;45m\]\w\[\033[38;5;34m\]]\n\
-\[\033[38;5;34m\]╰─🠞 \[\033[0m\] "
-
-# Export PS1 to make it work in the terminal
-export PS1
+\[\033[38;5;34m\]╰─🠞 "
