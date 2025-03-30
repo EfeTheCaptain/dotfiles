@@ -6,7 +6,7 @@ COL_BLUE="\033[38;5;125m"
 COL_CYAN="\033[38;5;124m"
 COL_YELLOW="\033[38;5;220m"
 COL_RED="\033[38;5;45m"
-COL_WHITE="\033[38;5;194m\]"
+COL_WHITE="\033[38;5;194m"
 
 # Dynamic content generation (with PS1 escapes)
 package_count="${COL_CYAN}$(dpkg -l | grep -c '^ii')"
