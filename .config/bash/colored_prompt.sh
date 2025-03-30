@@ -5,7 +5,7 @@ os_logo="\Uf0238"  # Using Unicode escape for Debian logo
 
 # Print static header (correctly formatted)
 echo -e "\n\033[38;5;34m╭──[ ${package_count} \033[38;5;34m]───[\033[0m${os_logo}\033[38;5;34m]"
-echo -e "\033[38;5;34m╰───[ ${cpu_model} \033[38;5;34m]\033[0m\n"
+echo -e "\033[38;5;34m╰───[ ${cpu_model} \033[38;5;34m]\033[0m"
 
 
 # Define PS1 (with \[ \] for prompt safety)
