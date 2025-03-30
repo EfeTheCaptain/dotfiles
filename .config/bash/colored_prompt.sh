@@ -22,5 +22,5 @@ os_logo="${color_231}󰣇${nc}"
 # Define the Prompt
 PS1="\n${color_083}┏━${color_083}[${package_count}]${color_083}━━[${os_logo}${color_083}]\n\
 ${color_083}┣━━${color_083}[${cpu_model}${color_083}]\n\
-${color_083}┣━━━[${color_184}\u${color_076}\@h${color_083}]━━━[${color_045}\w${color_083}]\n\
+${color_083}┣━━━[${color_184}\u${color_076}@\h${color_083}]━━━[${color_045}\w${color_083}]\n\
 ${color_083}┗━🠊 ${nc} "
