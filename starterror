@@ -1,0 +1,26 @@
+
+
+X.Org X Server 1.21.1.7
+X Protocol Version 11, Revision 0
+Current Operating System: Linux antix 5.10.224-antix.1-486-smp #2 SMP Sun Aug 25 07:45:43 EDT 2024 i686
+Kernel command line: BOOT_IMAGE=/boot/vmlinuz-5.10.224-antix.1-486-smp root=UUID=5cb852fa-e03e-4e93-8baa-cad20a527efd ro quiet selinux=0
+xorg-server 2:21.1.7-3.0nosystemd4 (https://www.devuan.org/os/community) 
+Current version of pixman: 0.42.2
+	Before reporting problems, check http://wiki.x.org
+	to make sure that you have the latest version.
+Markers: (--) probed, (**) from config file, (==) default setting,
+	(++) from command line, (!!) notice, (II) informational,
+	(WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+(==) Log file: "/home/efe/.local/share/xorg/Xorg.0.log", Time: Sun Mar 30 08:35:40 2025
+(==) Using config directory: "/etc/X11/xorg.conf.d"
+(==) Using system config directory "/usr/share/X11/xorg.conf.d"
+(II) [libseat/libseat.c:73] Seat opened with backend 'seatd'
+(II) [libseat/backend/seatd.c:212] Enabling seat
+xf86EnableIO: failed to enable I/O ports 0000-03ff (Operation not permitted)
+(II) AIGLX: Suspending AIGLX clients for VT switch
+(II) Server terminated successfully (0). Closing log file.
+xinit: connection to X server lost
+sudo: unable to read password: Input/output error
+sudo: a password is required
+XIO:  fatal IO error 2 (No such file or directory) on X server ":0"
+      after 12 requests (12 known processed) with 0 events remaining.
