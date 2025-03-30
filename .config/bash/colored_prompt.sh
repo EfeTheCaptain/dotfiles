@@ -16,8 +16,8 @@ package_count="${color_005}$(dpkg -l | grep -c '^ii')${nc}"
 os_logo="${color_231}\Uf0238${nc}"  # Using Unicode escape for Debian logo
 
 # Print static header (correctly formatted)
-echo -e "\n${color_084}╭──[ ${package_count} ]───[ ${os_logo} ]${nc}"
-echo -e "${color_084}╰───[ ${cpu_model} ]${nc}\n"
+echo -e "\n${color_084}╭──[ ${package_count} ${color_084}]───[ ${os_logo} ${color_084}]"
+echo -e "${color_084}╰───[ ${cpu_model} ${color_084}]\n"
 
 # Define PS1 (with \[ \] for prompt safety)
 PS1="\n\[\033[38;5;084m\]╭───[\[\033[38;5;184m\]\u\[\033[38;5;114m\]@\h\[\033[38;5;084m\]]──[\[\033[38;5;045m\]\w\[\033[38;5;084m\]]\n\[\033[38;5;084m\]╰─🠞 \[\033[0m\] "
