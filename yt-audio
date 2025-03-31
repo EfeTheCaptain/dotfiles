@@ -1,65 +1,35 @@
 #!/bin/bash
 
-# Function to clean up on exit
-cleanup() {
-    [ -n "$tmpfile" ] && rm -f "$tmpfile"
-}
-trap cleanup EXIT
-
 # Get search query
 read -rp "🔍 Search YouTube: " query
 [ -z "$query" ] && exit 1
 
-# Create temp file for results
-tmpfile=$(mktemp) || { echo "Error: Could not create temp file"; exit 1; }
+# Get the first result as JSON
+result=$(yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null | jq -r '.[0]')
 
-# Get 5 results as JSON array with error handling
-if ! yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null | jq -s '.' > "$tmpfile"; then
-    echo "Error: Search failed"
-    exit 1
-fi
+# Extract the URL of the first result
+url=$(echo "$result" | jq -r '.webpage_url')
 
-# Read results from the temp file
-results=$(cat "$tmpfile")
-if [ -z "$results" ] || [ "$results" = "[]" ]; then
-    echo "Error: No results found"
-    exit 1
-fi
-
-# Format results for display with proper duration handling
-formatted_results=$(jq -r '.[] | 
-    ((.duration? // 0) | tonumber | strftime("%M:%S")) as $dur |
-    "[\($dur)] \(.title)"' "$tmpfile")
-
-# Select with fzf
-selected=$(echo "$formatted_results" | fzf --height=40% --reverse --cycle --prompt="Select song: " --bind 'ctrl-c:abort')
-[ -z "$selected" ] && exit 0
-
-# Extract clean title (handles special characters and trims spaces)
-title=$(echo "$selected" | sed -E 's/^\[[^]]*\] //' | sed 's/[[:space:]]*$//')
-
-# Get URL by matching exact title from original results
-url=$(jq -r --arg t "$title" '
-    .[] |
-    select(.title == $t) |
-    .webpage_url' "$tmpfile")
-
-# Debug: Print the extracted URL
+# Debug: Print the URL
 echo "Extracted URL: $url"
 
-# Play with error checking
-if [ -n "$url" ]; then
-    echo "Playing: $title"
-    if ! mpv --no-video \
-             --ao=alsa \
-             --no-ytdl \
-             --cache-secs=15 \
-             --demuxer-max-bytes=15MiB \
-             "$url"; then
-        echo "Error: Playback failed for $title"
-        exit 1
-    fi
-else
-    echo "Error: Could not extract URL for: $title"
+# Ensure the URL is not empty
+if [ -z "$url" ]; then
+    echo "Error: No URL extracted or URL is empty."
     exit 1
 fi
+
+# Test the URL with ffmpeg for format issues
+ffmpeg -i "$url" 2>&1 | tee ffmpeg_debug.log
+
+# Check if ffmpeg encountered issues
+if grep -q "Error" ffmpeg_debug.log; then
+    echo "Error: Issue with stream format."
+    exit 1
+fi
+
+# Play the video with mpv (add debug logging)
+mpv --no-video --ao=alsa --log-file=mpv_debug.log "$url" || {
+    echo "Error: Playback failed for $url"
+    exit 1
+}
