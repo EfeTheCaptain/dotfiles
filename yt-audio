@@ -57,9 +57,9 @@ if [ -n "$url" ]; then
     echo "Playing: $title"
     mpv --no-video \
         --cache=yes \
-        --demuxer-max-bytes=500M \
-        --demuxer-readahead-secs=60 \
-        --stream-buffer-size=4MB \
+        --demuxer-max-bytes=50M \
+        --demuxer-readahead-secs=30 \
+        --stream-buffer-size=4M \
         --input-ipc-server=/tmp/mpv-socket \
         "$url" || {
         echo "Error: Playback failed"
