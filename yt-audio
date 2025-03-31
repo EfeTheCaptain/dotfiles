@@ -1,40 +1,63 @@
 #!/bin/bash
 
+# Function to clean up on exit
+cleanup() {
+    [ -n "$tmpfile" ] && rm -f "$tmpfile"
+}
+trap cleanup EXIT
+
 # Get search query
 read -rp "🔍 Search YouTube: " query
 [ -z "$query" ] && exit 1
 
-# Get 5 results as JSON array
-results=$(yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null | jq -s '.')
-[ -z "$results" ] && echo "Error: No results found or connection failed" && exit 1
+# Create temp file for results
+tmpfile=$(mktemp) || { echo "Error: Could not create temp file"; exit 1; }
 
-# Format results for display (ensure titles are correct)
-formatted_results=$(echo "$results" | jq -r '.[] | 
-  (.duration|tonumber|strftime("%M:%S") // "?:??") as $dur |
-  "[\($dur)] \(.title)"')
+# Get 5 results as JSON array with error handling
+if ! yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null | jq -s '.' > "$tmpfile"; then
+    echo "Error: Search failed"
+    exit 1
+fi
+
+results=$(cat "$tmpfile")
+if [ -z "$results" ] || [ "$results" = "[]" ]; then
+    echo "Error: No results found"
+    exit 1
+fi
+
+# Format results for display with proper duration handling
+formatted_results=$(jq -r '.[] | 
+    ((.duration? // 0) | tonumber | strftime("%M:%S")) as $dur |
+    "[\($dur)] \(.title)"' "$tmpfile")
 
 # Select with fzf
-selected=$(echo "$formatted_results" | fzf --height=40% --reverse --cycle --prompt="Select song: ")
+selected=$(echo "$formatted_results" | fzf --height=40% --reverse --cycle --prompt="Select song: " --bind 'ctrl-c:abort')
 [ -z "$selected" ] && exit 0
 
-# Extract clean title (handles special characters)
-title=$(echo "$selected" | sed 's/^\[.*\] //')
+# Extract clean title (handles special characters and trims spaces)
+title=$(echo "$selected" | sed -E 's/^\[[^]]*\] //' | sed 's/[[:space:]]*$//')
 
 # Get URL by matching exact title from original results
-url=$(echo "$results" | jq -r --arg t "$title" '
-  .[] | 
-  select(.title == $t) | 
-  .webpage_url')
+url=$(jq -r --arg t "$title" '
+    .[] | 
+    select(.title == $t) | 
+    .webpage_url' "$tmpfile")
 
 # Play with error checking
 if [ -n "$url" ]; then
     echo "Playing: $title"
-    mpv --no-video --vo=null --ao=alsa \
+    mpv --no-video \
+        --vo=null \
+        --ao=alsa \
         --demuxer-max-bytes=20MiB \
         --demuxer-max-back-bytes=4MiB \
-        --http-pipelining=no \  # Prevent FFmpeg reuse connection errors
-        "$url" || echo "Playback failed"
+        --no-ytdl \
+        --stream-lavf-o="protocol_whitelist=file,http,https,tcp,tls" \
+        "$url" || {
+            echo "Error: Playback failed for $title"
+            exit 1
+        }
 else
-    echo "Error: Could not extract URL for selected video"
+    echo "Error: Could not extract URL for: $title"
     exit 1
 fi
