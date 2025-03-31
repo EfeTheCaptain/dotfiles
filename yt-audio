@@ -4,6 +4,51 @@
 read -rp "🔍 Search YouTube: " query
 [ -z "$query" ] && exit 1
 
+# Get the raw JSON results from yt-dlp
+yt_dlp_output=$(yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null)
+
+# Debug: Print the raw JSON output from yt-dlp
+echo "yt-dlp output:"
+echo "$yt_dlp_output" | jq .
+
+# Check if the output is valid
+if [ -z "$yt_dlp_output" ]; then
+    echo "Error: yt-dlp returned no output or failed."
+    exit 1
+fi
+
+# Now try extracting the URL
+url=$(echo "$yt_dlp_output" | jq -r '.[0].webpage_url')
+
+# Debug: Print the extracted URL
+echo "Extracted URL: $url"
+
+# Check if the URL was extracted correctly
+if [ -z "$url" ]; then
+    echo "Error: No URL extracted or URL is empty."
+    exit 1
+fi
+
+# Test the URL with ffmpeg for format issues
+ffmpeg -i "$url" 2>&1 | tee ffmpeg_debug.log
+
+# Check if ffmpeg encountered issues
+if grep -q "Error" ffmpeg_debug.log; then
+    echo "Error: Issue with stream format."
+    exit 1
+fi
+
+# Play the video with mpv (add debug logging)
+mpv --no-video --ao=alsa --log-file=mpv_debug.log "$url" || {
+    echo "Error: Playback failed for $url"
+    exit 1
+}
+#!/bin/bash
+
+# Get search query
+read -rp "🔍 Search YouTube: " query
+[ -z "$query" ] && exit 1
+
 # Get the first result as JSON
 result=$(yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null | jq -r '.[0]')
 
