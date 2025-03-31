@@ -19,6 +19,7 @@ if ! yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null
     exit 1
 fi
 
+# Read results from the temp file
 results=$(cat "$tmpfile")
 if [ -z "$results" ] || [ "$results" = "[]" ]; then
     echo "Error: No results found"
@@ -39,8 +40,8 @@ title=$(echo "$selected" | sed -E 's/^\[[^]]*\] //' | sed 's/[[:space:]]*$//')
 
 # Get URL by matching exact title from original results
 url=$(jq -r --arg t "$title" '
-    .[] | 
-    select(.title == $t) | 
+    .[] |
+    select(.title == $t) |
     .webpage_url' "$tmpfile")
 
 # Debug: Print the extracted URL
@@ -49,16 +50,15 @@ echo "Extracted URL: $url"
 # Play with error checking
 if [ -n "$url" ]; then
     echo "Playing: $title"
-    mpv --no-video \
-        --ao=alsa \
-        --no-ytdl \
-        --no-http-keepalive \
-        --demuxer-max-bytes=20MiB \
-        --cache-secs=20 \
-        "$url" || {
-            echo "Error: Playback failed for $title"
-            exit 1
-        }
+    if ! mpv --no-video \
+             --ao=alsa \
+             --no-ytdl \
+             --cache-secs=15 \
+             --demuxer-max-bytes=15MiB \
+             "$url"; then
+        echo "Error: Playback failed for $title"
+        exit 1
+    fi
 else
     echo "Error: Could not extract URL for: $title"
     exit 1
