@@ -38,7 +38,7 @@ if [ -n "$url" ]; then
         --demuxer-max-bytes=20MiB \
         --demuxer-max-back-bytes=4MiB \
         --no-ytdl \
-        --stream-lavf-o=protocol_whitelist=file,http,https,tcp,tls \
+        --stream-lavf-o="protocol_whitelist=file,http,https,tcp,tls" \
         "$url" || {
             echo "Playback failed"
             exit 1
