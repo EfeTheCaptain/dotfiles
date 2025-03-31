@@ -96,15 +96,16 @@ if [ -n "$url" ]; then
     fi
     
     # Try to play with mpv, with various fallbacks and error handling
-    if ! mpv --no-video \
-             --ao=alsa \
-             --http-persistent=yes \
-             --http-retries=infinite \
-             --cache=yes \
-             --ytdl-format="bestaudio/best" \
-             --script-opts=ytdl_hook-try_ytdl_first=yes \
-             "$url" 2>&1 | tee "$tmpfile.err"; then
-        
+    # Try to play with mpv, with various fallbacks and error handling
+        if ! mpv --no-video \
+            --ao=alsa \
+            --http-retries=5 \
+            --cache=yes \
+            --ytdl-format="bestaudio/best" \
+            --script-opts=ytdl_hook-try_ytdl_first=yes \
+            "$url" 2>&1 | tee "$tmpfile.err"; then
+            # ... (rest of the error handling)
+        fi
         echo "Error: Playback failed for $title."
         
         # Check for common errors
