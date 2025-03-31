@@ -49,10 +49,16 @@ echo "Extracted URL: $url"
 # Play with error checking
 if [ -n "$url" ]; then
     echo "Playing: $title"
-    mpv --no-video --ao=alsa "$url" || {
-        echo "Error: Playback failed for $title"
-        exit 1
-    }
+    mpv --no-video \
+        --ao=alsa \
+        --no-ytdl \
+        --no-http-keepalive \
+        --demuxer-max-bytes=20MiB \
+        --cache-secs=20 \
+        "$url" || {
+            echo "Error: Playback failed for $title"
+            exit 1
+        }
 else
     echo "Error: Could not extract URL for: $title"
     exit 1
