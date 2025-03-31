@@ -43,20 +43,16 @@ url=$(jq -r --arg t "$title" '
     select(.title == $t) | 
     .webpage_url' "$tmpfile")
 
+# Debug: Print the extracted URL
+echo "Extracted URL: $url"
+
 # Play with error checking
 if [ -n "$url" ]; then
     echo "Playing: $title"
-    mpv --no-video \
-        --vo=null \
-        --ao=alsa \
-        --demuxer-max-bytes=20MiB \
-        --demuxer-max-back-bytes=4MiB \
-        --no-ytdl \
-        --http-header-fields="protocol_whitelist=file,http,https,tcp,tls" \
-        "$url" || {
-            echo "Error: Playback failed for $title"
-            exit 1
-        }
+    mpv --no-video --ao=alsa "$url" || {
+        echo "Error: Playback failed for $title"
+        exit 1
+    }
 else
     echo "Error: Could not extract URL for: $title"
     exit 1
