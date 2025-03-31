@@ -1,8 +1,8 @@
 [ -z "$PS1" ] && return
 
-# Call the color prompt file
+## Call the color prompt file
 source ~/.config/bash/colored_prompt.sh
-
+#
 HISTCONTROL=ignoreboth
 shopt -s histappend
 shopt -s checkwinsize
@@ -17,7 +17,7 @@ bind 'TAB:menu-complete'
 if [ -f ~/.env ]; then
   . ~/.env 2>/dev/null >/dev/null
 fi
-#-----------------------------------------------#FUNC#
+##-----------------------------------------------#FUNC#
 if [ -f ~/.bash_functions ]; then
   . ~/.bash_functions
 fi
@@ -25,18 +25,18 @@ fi
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
-#-----------------------------------------------#COMP#
+##-----------------------------------------------#COMP#
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 elif [ -f /usr/share/bash-completion/bash_completion ] && ! shopt -oq posix; then
     . /usr/share/bash-completion/bash_completion
 fi
-#-----------------------------------------------#CHROO#
+##-----------------------------------------------#CHROO#
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
-#-----------------------------------------------##
+##-----------------------------------------------##
 
 # Default parameter to send to the "less" command
 # -R: show ANSI colors correctly; -i: case insensitive search
@@ -47,10 +47,10 @@ LESS="-R -i"
 test -r ~/.config/bash/.dir_colors && eval "$(dircolors ~/.config/bash/.dir_colors)"
 #. "$HOME/.cargo/env" 
 
-afetch
 
 eval "$(thefuck --alias)"
 
+eval "$(ssh-agent -s > /dev/null)"
 eval "$(zoxide init bash)"
 [ -f /usr/share/doc/fzf/examples/key-bindings.bash ] && source /usr/share/doc/fzf/examples/key-bindings.bash 
 [ -f /usr/share/doc/fzf/examples/completion.bash ] && source /usr/share/doc/fzf/examples/completion.bash
@@ -58,3 +58,4 @@ eval "$(zoxide init bash)"
 export FZF_COMPLETION_TRIGGER='^R'
 #hstr --show-configuration >> ~/.bashrc
 
+fastfetch --config minimal2.jsonc

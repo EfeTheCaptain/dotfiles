@@ -9,7 +9,7 @@ alias mv='mv -vi'
 alias count="exa * | wc -l"
 alias cpv='rsync -avh --info=progress2'
 
-alias mk='sudo make clean install'
+alias mk='doas make clean install'
 alias mountt='sudo /home/efe/.local/bin/scripts/mountfzf.sh'
 
 alias lsa='exa -a --color=auto --icons'
@@ -20,19 +20,19 @@ alias au='sudo apt update'
 alias ai='sudo apt install'
 alias ar='sudo apt remove --purge'
 
-alias v='sudo nvim'
+alias v='doas nvim'
 
-alias sleep='sudo pm-suspend-hybrid'
-alias poff='sudo poweroff'
-alias reboot='sudo reboot'
+alias sleep='doas pm-suspend-hybrid'
+alias poff='doas poweroff'
+alias reboot='doas reboot'
 
 alias chmodx='sudo chmod +x'
 
 alias wgeti='wget -N --header="Cache-Control: no-cache" --header="Pragma: no-cache" '
 #alias brii='brightnessctl -d intel_backlight s'
 
-alias aliass='sudo nvim ~/.bash_aliases'
-alias bashrcc='sudo nvim ~/.bashrc'
+alias aliass='doas nvim ~/.bash_aliases'
+alias bashrcc='doas nvim ~/.bashrc'
 
 ### GIT commands ###
 # 1️⃣ Initialize Git (if not already)
@@ -132,7 +132,7 @@ alias ypull='yadm pull'
 #### COMMANDS TO REMEMBER ###
 # add-apt-repository
 #disk usage of all the files in the given directory, sort reverse human read, top 3
-#sudo du -ah /home | sort -rh | head -n 3
+#doas du -ah /home | sort -rh | head -n 3
 
 #ncurses disk usage
 #ncdu

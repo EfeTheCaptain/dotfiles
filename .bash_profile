@@ -6,7 +6,7 @@ if [ -f "$HOME/.bashrc" ]; then
 fi
 
 # Load Turkish Q keyboard layout
-#sudo /usr/bin/loadkeys trq
+#doas /usr/bin/loadkeys trq
 
 # Set initial backlight brightness
 brightnessctl -d intel_backlight s 5%

@@ -10,16 +10,15 @@ if [ -f ~/.env ]; then
   . ~/.env
 fi
 
-# If DBUS_SESSION_BUS_ADDRESS is not set, start a DBus session:
+## If DBUS_SESSION_BUS_ADDRESS is not set, start a DBus session:
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
   eval "$(dbus-launch --sh-syntax --exit-with-session)"
 fi
-
-# Ensure DISPLAY is updated in DBus activation environment:
+#
+## Ensure DISPLAY is updated in DBus activation environment:
 dbus-update-activation-environment DISPLAY
 
 # Other startup commands:
-#sudo /usr/bin/loadkeys tr
 xrdb -merge ~/.Xresources
 dwmblocks &
 xcompmgr &
