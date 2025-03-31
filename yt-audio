@@ -19,24 +19,39 @@ if ! yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null
     exit 1
 fi
 
-results=$(cat "$tmpfile")
-if [ -z "$results" ] || [ "$results" = "[]" ]; then
+# Extract all results into arrays
+mapfile -t titles < <(jq -r '.[].title' "$tmpfile")
+mapfile -t durations < <(jq -r '.[] | (.duration? // 0) | tonumber | strftime("%M:%S")' "$tmpfile")
+mapfile -t urls < <(jq -r '.[].webpage_url' "$tmpfile")
+
+# Verify we got results
+if [ ${#titles[@]} -eq 0 ]; then
     echo "Error: No results found"
     exit 1
 fi
 
-# Format results for display
-formatted_results=$(jq -r '.[] | 
-    ((.duration? // 0) | tonumber | strftime("%M:%S")) as $dur |
-    "[\($dur)] \(.title)"' "$tmpfile")
+# Display numbered results
+echo ""
+echo "Search results:"
+for i in "${!titles[@]}"; do
+    printf "%d) [%s] %s\n" $((i+1)) "${durations[$i]}" "${titles[$i]}"
+done
 
-# Select with fzf
-selected=$(echo "$formatted_results" | fzf --height=40% --reverse --cycle --prompt="Select song: " --bind 'ctrl-c:abort')
-[ -z "$selected" ] && exit 0
+# Let user select
+read -rp "Select video (1-${#titles[@]}): " selection
 
-# Extract clean title
-title=$(echo "$selected" | sed -E 's/^\[[^]]*\] //' | sed 's/[[:space:]]*$//')
+# Validate input
+if ! [[ "$selection" =~ ^[1-5]$ ]] || [ "$selection" -gt "${#titles[@]}" ]; then
+    echo "Invalid selection"
+    exit 1
+fi
 
-# Get URL by matching exact title
-url=$(jq -r --arg t "$title" '
-    .
+# Adjust for zero-based index
+index=$((selection-1))
+
+# Play selected video
+echo "Playing: ${titles[$index]}"
+mpv --no-video --really-quiet "${urls[$index]}" || {
+    echo "Error: Playback failed (try installing mpv/ffmpeg)"
+    exit 1
+}
