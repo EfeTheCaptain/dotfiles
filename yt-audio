@@ -1,13 +1,14 @@
 #!/bin/bash
 
-# Configuration
-CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/yt_audio_player"
-mkdir -p "$CACHE_DIR"
-CACHE_FILE="$CACHE_DIR/last_session.json"
+# Single temporary file path
+TMP_FILE="/tmp/yt_audio_tmp"
+
+# Clear previous temp file if exists
+[ -f "$TMP_FILE" ] && rm -f "$TMP_FILE"
 
 # Cleanup function
 cleanup() {
-    [ -n "$tmpfile" ] && rm -f "$tmpfile"
+    [ -f "$TMP_FILE" ] && rm -f "$TMP_FILE"
 }
 trap cleanup EXIT
 
@@ -15,52 +16,41 @@ trap cleanup EXIT
 read -rp "🔍 Search YouTube: " query
 [ -z "$query" ] && exit 1
 
-# Create temp file
-tmpfile=$(mktemp) || { echo "Error: Could not create temp file"; exit 1; }
-
-# Check cache first
-if [ -s "$CACHE_FILE" ] && [[ "$(jq -r '.query' "$CACHE_FILE" 2>/dev/null)" == "$query" ]]; then
-    echo "Using cached results..."
-    cp "$CACHE_FILE" "$tmpfile"
-else
-    # Fetch fresh results
-    if ! yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null | jq -s '.' > "$tmpfile"; then
-        echo "Error: Search failed"
-        exit 1
-    fi
-    # Cache results
-    jq --arg q "$query" '. + {query: $q}' "$tmpfile" > "$CACHE_FILE"
+# Fetch results and store in temp file
+if ! yt-dlp --flat-playlist --default-search "ytsearch5" -j "$query" 2>/dev/null | jq -s '.' > "$TMP_FILE"; then
+    echo "Error: Search failed"
+    exit 1
 fi
 
-# Process results
-results=$(cat "$tmpfile")
-if [ -z "$results" ] || [ "$results" = "[]" ]; then
+# Verify results
+if [ ! -s "$TMP_FILE" ] || [ "$(jq -r 'length' "$TMP_FILE")" -eq 0 ]; then
     echo "Error: No results found"
     exit 1
 fi
 
-# Format for fzf
+# Format and display results
 formatted_results=$(jq -r '.[] | 
     ((.duration? // 0) | tonumber | strftime("%M:%S")) as $dur |
-    "[\($dur)] \(.title)"' "$tmpfile")
+    "[\($dur)] \(.title)"' "$TMP_FILE")
 
 # Select with fzf
 selected=$(echo "$formatted_results" | fzf --height=40% --reverse --cycle --prompt="Select song: " --bind 'ctrl-c:abort')
 [ -z "$selected" ] && exit 0
 
-# Extract title and URL
+# Extract title and URL safely
 title=$(echo "$selected" | sed -E 's/^\[[^]]*\] //' | sed 's/[[:space:]]*$//')
-url=$(jq -r --arg t "$title" '.[] | select(.title == $t) | .webpage_url' "$tmpfile")
+url=$(jq -r --arg t "$title" '.[] | select(.title | contains($t)) | .webpage_url' "$TMP_FILE")
 
-# Play with caching
+# Play with optimized settings
 if [ -n "$url" ]; then
     echo "Playing: $title"
     mpv --no-video \
         --cache=yes \
+        --cache-secs=5 \
         --demuxer-max-bytes=50M \
-        --demuxer-readahead-secs=30 \
-        --stream-buffer-size=4M \
-        --input-ipc-server=/tmp/mpv-socket \
+        --demuxer-max-back-bytes=5M \
+        --volume=100 \
+        --really-quiet \
         "$url" || {
         echo "Error: Playback failed"
         exit 1
