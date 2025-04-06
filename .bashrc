@@ -59,3 +59,4 @@ export FZF_COMPLETION_TRIGGER='^R'
 #hstr --show-configuration >> ~/.bashrc
 
 fastfetch --config minimal2.jsonc
+. "/home/efe/Projects/rs/cargo/env"

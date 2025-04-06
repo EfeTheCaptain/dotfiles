@@ -25,3 +25,4 @@ brightnessctl -d intel_backlight s 5%
 if [ -f "$HOME/.profile" ]; then
     . "$HOME/.profile"
 fi
+. "/home/efe/Projects/rs/cargo/env"

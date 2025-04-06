@@ -11,7 +11,7 @@ alias cpv='rsync -avh --info=progress2'
 
 alias mk='doas make clean install'
 alias mountt='sudo /home/efe/.local/bin/scripts/mountfzf.sh'
-
+alias ytaudio='. ~/yt-audio'
 alias lsa='exa -a --color=auto --icons'
 alias ll='exa -T -a --level=1 --color=auto --icons'
 alias lla='exa -T -a --level=2 --color=auto --icons'
@@ -20,8 +20,8 @@ alias au='sudo apt update'
 alias ai='sudo apt install'
 alias ar='sudo apt remove --purge'
 
-alias v='doas nvim'
-
+alias vv='doas nvim'
+alias nv='nvim'
 alias sleep='doas pm-suspend-hybrid'
 alias poff='doas poweroff'
 alias reboot='doas reboot'
@@ -117,7 +117,7 @@ alias gl='git log --oneline --graph --decorate'  # Show commit history
 
 #alias yadm-force-push='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD) && yadm push --force'
 #alias yadm-force-pull='yadm fetch origin && yadm reset --hard origin/$(yadm symbolic-ref --short HEAD)'
-alias ya='yadm add .bash_aliases .bash_profile .bashrc .profile .xinitrc .xprofile .Xresources .config/sxhkd/sxhkdrc .config/system/* .config/bash/* .config/dunst/dunstrc .config/falkon/themes/win10dark/* .config/qt5ct/qt5ct.conf'
+alias ya='yadm add .bash_aliases .bash_profile .bashrc .profile .xinitrc .xprofile .Xresources .config/sxhkd/sxhkdrc .config/system/* .config/bash/* ~/yt-audio ~/Projects/py .config/dunst/dunstrc .config/falkon/themes/win10dark/* .config/qt5ct/qt5ct.conf'
 alias yc='yadm commit -m'
 alias ypush='yadm push'
 alias ypull='yadm pull'

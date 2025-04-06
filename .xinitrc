@@ -21,7 +21,7 @@ dbus-update-activation-environment DISPLAY
 # Other startup commands:
 xrdb -merge ~/.Xresources
 dwmblocks &
-xcompmgr &
+xcompmgr -c -f -F -C -r 10 -o 0.6 -l -10 -t -10 -I 0.01 -O 0.03 -D 3&
 sxhkd &
 feh --bg-fill --random /home/efe/img/AI_Images/* &
 
