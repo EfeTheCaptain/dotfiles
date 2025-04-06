@@ -1,0 +1,24 @@
+#!/bin/sh
+# iwd
+# Bring up the device, start iwd, and get IP.
+
+WLAN_INTERFACE="wlan0"
+SSID="YourSSID"
+PSK="your_password"
+
+# Check if network is already configured
+if ip a show "$WLAN_INTERFACE" | grep -q "inet "; then
+  echo "Network already configured. Exiting."
+  exit 0
+fi
+
+# Bring the wlan0 interface up
+ip link set "$WLAN_INTERFACE" up
+
+# Start iwd (no need for backgrounding; iwd handles connection)
+pgrep iwd >/dev/null || iwd &
+
+# Connect to the network (this will auto-get an IP)
+iwd station "$WLAN_INTERFACE" connect "$SSID"
+
+echo "------------------Network------------------"
